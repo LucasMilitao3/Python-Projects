@@ -3,33 +3,56 @@ from random import randint
 
 def JogaAdivinhacao():
 
-    rodada = 100
-    tentativa = 1
-    numero_secreto = randint(1,100)
-    chute_usuario = 1
+    print("********************************************************************")
+    print("*******************        BEM VINDO          **********************")
+    print("******************************************************************** \n\n")
 
-    print('Bem vindo ao jogo de adivinhação mais Try Hard do mundo!, Adivinhe o numero de secreto do 1 ao 100!')
+    numero_aleatorio = randint(1, 100)
+    tentativas = 1
+    pontos = 1000
 
+    print("Selecione o nível de dificuldade do jogo.\n"
+          "Digite (1) para Fácil - 15 tentativas \n"
+          "Digite (2) para Médio - 10 tentativas \n"
+          "Digite (3) para Difícil - 5 tentativas.", numero_aleatorio, '\n')
 
-    while (tentativa <= 100):
-        print('Esta é a tentativa {} de {}'.format(tentativa, rodada))
-        chute_usuario = int(input("Adivinhe o numero secreto: "))
+    dificuldade = 1
+    level = int(input("Dificuldade: "))
 
-        #Declarando os argumentos para usar no if/else
+    while level != 1 and level != 2 and level != 3:
+        # Verifica se o input do usuário está dentro do escopo esperado da dificuldade do jogo
+        print("Valor inválido")
+        level = int(input("Dificuldade: "))
 
-        maior = chute_usuario > numero_secreto
-        menor = chute_usuario < numero_secreto
-        igual = chute_usuario == numero_secreto
+    if level == 1:  # Definimos o nível de dificuldade do jogo com a quantidade de tentativas
+        dificuldade = 15
+    elif level == 2:
+        dificuldade = 10
+    else:
+        dificuldade = 5
 
-        if (igual):
-            print('Parabéns, você acertou na mosca')
+    while tentativas <= dificuldade:
+        # Enquanto a quantidade de tentativas forem menores que as chances definidas anteriormente o game continua
+        numero_chute = int(input("Chute um numero de 1 a 100: "))
+
+        if numero_chute == numero_aleatorio:
+            print(f"Parabéns, voce acertou! Você fez {pontos} pontos")
             break
-        elif(menor):
-            print('Seu chute foi abaixo do numero secreto')
+        elif numero_chute > numero_aleatorio:
+            if tentativas == dificuldade:
+                print(f"Você perdeu, o número secreto era: {numero_aleatorio}. Tente novamente.")
+                break
+            print("Seu chute está acima")
         else:
-            print('Seu chute foi acima do numero secreto')
+            if tentativas == dificuldade:
+                print(f"Você perdeu, o número secreto era: {numero_aleatorio}. Tente novamente.")
+                break
+            print("Seu chute está abaixo")
 
-        tentativa = tentativa + 1
+        pontos_perdidos = abs(numero_aleatorio - numero_chute)  # Trecho onde subtraímos pontos do usuário
+        pontos = pontos - pontos_perdidos
+        print("Você tem {0} tentativas de {1}".format(tentativas, dificuldade))
+        tentativas += 1
 
 if __name__ == "__main__":
     JogaAdivinhacao()

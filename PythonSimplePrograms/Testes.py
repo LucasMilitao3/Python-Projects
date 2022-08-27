@@ -1,8 +1,11 @@
 from typing import Any
 
-arquivo = open('frutas.txt', "r")
-lista = [linha for linha in arquivo]
+file = open('frutas.txt', "r")
+lista = []
 
-arquivo.close()
+for line in file:
+    line = line.strip()
+    lista.append(line)
+    print(line)
+file.close()
 
-print(lista.strip())
